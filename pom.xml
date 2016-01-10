@@ -21,7 +21,7 @@
         <!--<tiles.version>3.0.4</tiles.version>-->
         <java.version>1.7</java.version>
         <jackson.version>2.4.1</jackson.version>
-        <node.version>1.1</node.version>
+        <node.version>0.1.6-SNAPSHOT</node.version>
     </properties>
 
     <dependencies>
@@ -34,8 +34,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>rw.ktc.gcktc.node.hib</groupId>
-            <artifactId>node-hibernate</artifactId>
+            <groupId>rw.ktc.cms</groupId>
+			<artifactId>node-hib</artifactId>
             <version>${node.version}</version>
         </dependency>
         <dependency>
@@ -126,6 +126,12 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.6.2</version>
         </dependency>
+        <dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+        
     </dependencies>
 
     <build>
@@ -161,7 +167,7 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addClasspath>true</addClasspath>
-                            <!--<mainClass>rw.gcktc.nsi.app.StartInConsole</mainClass>-->
+                            <!--<mainClass>rw.ktc.nsi.app.StartInConsole</mainClass>-->
                             <classpathPrefix>dependency-jars/</classpathPrefix>
                         </manifest>
                         <!--<manifestEntries>-->

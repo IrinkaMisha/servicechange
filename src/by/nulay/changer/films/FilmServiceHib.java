@@ -6,8 +6,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rw.gcktc.cms.nodedata.service.hib.GenericHibernateDAO;
-import rw.gcktc.cms.nodedata.service.hib.ServiceHib;
+import rw.ktc.cms.nodedata.service.hib.GenericHibernateDAO;
+import rw.ktc.cms.nodedata.service.hib.ServiceHib;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +53,6 @@ public class FilmServiceHib<T extends  Film,ID extends Number> extends GenericHi
 
     @Override
     public List<T> getAllFilm(){
-         return getAllObject();
+         return getAll();
     }
 }
