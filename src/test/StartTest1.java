@@ -10,7 +10,7 @@ public class StartTest1 {
     public static void main(String[] str){
         String strs="skdljfsa;kj html sadfasdfj;kjdiv;lsjkdf;k";
         String sdf="<%@ page import=\"org.springframework.context.i18n.LocaleContextHolder\" %>\n" +
-                "<%@ page import=\"rw.gcktc.webcms.form.NodeView\" %>\n" +
+                "<%@ page import=\"rw.ktc.webcms.form.NodeView\" %>\n" +
                 "<%@ page import=\"java.util.Locale\" %>\n" +
                 "<%--\n" +
                 "  Created by IntelliJ IDEA.\n" +

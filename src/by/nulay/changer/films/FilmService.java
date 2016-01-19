@@ -1,6 +1,6 @@
 package by.nulay.changer.films;
 
-import rw.gcktc.cms.nodedata.service.GenericDAO;
+import rw.ktc.cms.nodedata.service.GenericDAO;
 
 import java.util.List;
 
