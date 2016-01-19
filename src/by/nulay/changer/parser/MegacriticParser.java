@@ -5,5 +5,17 @@ package by.nulay.changer.parser;
  * Class parser megacritic site for select new Films
  */
 public class MegacriticParser {
+    public static void main(String[] str){
+        MegacriticParser mc = new MegacriticParser();
+        mc.startParse();
+    }
+
+    public MegacriticParser() {
+    }
+    private String urlSite="http://www.megacritic.ru/films.html";
+    private void startParse() {
+
+
+    }
 
 }
