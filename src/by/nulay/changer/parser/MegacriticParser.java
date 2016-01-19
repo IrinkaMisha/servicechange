@@ -5,5 +5,5 @@ package by.nulay.changer.parser;
  * Class parser megacritic site for select new Films
  */
 public class MegacriticParser {
-    
+
 }
