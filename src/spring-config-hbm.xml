@@ -80,7 +80,7 @@
                 <!--добавляем в hibernate маппинги модуля usermanager-->
                 <!--<ref bean="listHibPackageCMSCORE"/>-->
                 <!--добавляем в хиб маппинги модуля ченжера-->
-                <!--<ref bean="listHibPackageServChange"/>-->
+                <ref bean="listHibPackageServChange"/>
             </list>
         </constructor-arg>
     </bean>

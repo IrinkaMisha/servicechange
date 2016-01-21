@@ -2,11 +2,13 @@ package by.nulay.changer.parser;
 
 import by.nulay.changer.vk.FilmTake;
 import by.nulay.changer.vk.FilmTakeService;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -23,17 +25,30 @@ import java.util.List;
  */
 @Component("MegacriticParser")
 public class MegacriticParser {
+    private static Logger log= Logger.getLogger(MegacriticParser.class);
     @Autowired
     private FilmTakeService filmTakeService;
 
     public static void main(String[] str){
         String configFiles="modules"+ File.separator+"servicechange"+ File.separator+"src"+ File.separator+"spring-nvkwork.xml";
         FileSystemXmlApplicationContext factory = new FileSystemXmlApplicationContext(configFiles);
-
+        MegacriticParser b= (MegacriticParser) factory.getBean("MegacriticParser");
+        try {
+            while(true){
+                b.startParse();
+                try {
+                    Thread.sleep(1000*60*60*12);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public MegacriticParser() throws IOException {
-        startParse();
+    public MegacriticParser(){
+
     }
     private String urlSite="http://www.megacritic.ru/films.html";
     private void startParse() throws IOException {
@@ -59,6 +74,7 @@ public class MegacriticParser {
 
         for(FilmTake ft:listFilmTake){
             filmTakeService.saveFilm(ft);
+            log.info("loadFilm "+ft.getName());
         }
 
     }

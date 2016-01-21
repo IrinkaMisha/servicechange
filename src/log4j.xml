@@ -40,40 +40,47 @@
 
 
     <!--<logger name="rw" additivity="false">-->
-        <!--<level value="DEBUG"/>-->
-        <!--<appender-ref ref="a_file"/>-->
-        <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
-        <!--<appender-ref ref="A_CONSOLE"/>-->
+    <!--<level value="DEBUG"/>-->
+    <!--<appender-ref ref="a_file"/>-->
+    <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
+    <!--<appender-ref ref="A_CONSOLE"/>-->
     <!--</logger>-->
 
-    <!--<logger name="org.springframework.jdbc.datasource.DriverManagerDataSource" additivity="false">-->
-        <!--<level value="INFO"/>-->
+    <logger name="by.nulay.changer" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="a_file"/>
         <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
-        <!--<appender-ref ref="A_CONSOLE"/>-->
+        <appender-ref ref="A_CONSOLE"/>
+    </logger>
+
+    <!--<logger name="org.springframework.jdbc.datasource.DriverManagerDataSource" additivity="false">-->
+    <!--<level value="INFO"/>-->
+    <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
+    <!--<appender-ref ref="A_CONSOLE"/>-->
     <!--</logger>-->
 
     <!--<logger name="org.hibernate.SQL" additivity="false">-->
-        <!--<level value="debug"/>-->
-        <!--&lt;!&ndash;<level value="WARN"/>&ndash;&gt;-->
-        <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
-        <!--<appender-ref ref="A_CONSOLE"/>-->
+    <!--<level value="debug"/>-->
+    <!--<level value="WARN"/>-->
+    <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
+    <!--<appender-ref ref="A_CONSOLE"/>-->
     <!--</logger>-->
 
     <!--<logger name="org.apache.tiles" additivity="false">-->
-        <!--<level value="WARN"/>-->
-        <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
-        <!--<appender-ref ref="A_CONSOLE"/>-->
+    <!--<level value="WARN"/>-->
+    <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
+    <!--<appender-ref ref="A_CONSOLE"/>-->
     <!--</logger>-->
 
     <!--<logger name="org.springframework" additivity="false">-->
-        <!--<level value="WARN"/>-->
-        <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
-        <!--<appender-ref ref="A_CONSOLE"/>-->
+    <!--<level value="WARN"/>-->
+    <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
+    <!--<appender-ref ref="A_CONSOLE"/>-->
     <!--</logger>-->
     <!--<logger name="org.springframework.security" additivity="false">-->
-        <!--<level value="WARN"/>-->
-        <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
-        <!--<appender-ref ref="A_CONSOLE"/>-->
+    <!--<level value="WARN"/>-->
+    <!--<appender-ref ref="A_CONSOLE_ERROR"/>-->
+    <!--<appender-ref ref="A_CONSOLE"/>-->
     <!--</logger>-->
 
     <root>
