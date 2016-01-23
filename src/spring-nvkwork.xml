@@ -33,5 +33,5 @@
         </constructor-arg>
     </bean>
 
-    <import resource="spring-config-hbm.xml"/>
+
 </beans>

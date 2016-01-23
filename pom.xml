@@ -6,9 +6,9 @@
 
 
     <groupId>by.nulay.changer</groupId>
-    <artifactId>changer</artifactId>
-    <description>Changer sight</description>
-    <version>1.1</version>
+    <artifactId>changer-starter</artifactId>
+    <description>Changer sight starter</description>
+    <version>1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -107,7 +107,7 @@
         <dependency>
             <groupId>rw.ktc.cms</groupId>
             <artifactId>node</artifactId>
-            <version>0.1.6</version>
+            <version>${node.version}</version>
         </dependency>
         <dependency>
             <groupId>rw.ktc.cms</groupId>

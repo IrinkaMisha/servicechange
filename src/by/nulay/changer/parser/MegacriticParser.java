@@ -29,29 +29,11 @@ public class MegacriticParser {
     @Autowired
     private FilmTakeService filmTakeService;
 
-    public static void main(String[] str){
-        String configFiles="modules"+ File.separator+"servicechange"+ File.separator+"src"+ File.separator+"spring-nvkwork.xml";
-        FileSystemXmlApplicationContext factory = new FileSystemXmlApplicationContext(configFiles);
-        MegacriticParser b= (MegacriticParser) factory.getBean("MegacriticParser");
-        try {
-            while(true){
-                b.startParse();
-                try {
-                    Thread.sleep(1000*60*60*12);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public MegacriticParser(){
 
     }
     private String urlSite="http://www.megacritic.ru/films.html";
-    private void startParse() throws IOException {
+    public void startParse() throws IOException {
 
         Document doc = Jsoup.connect(urlSite).get();
         Elements newsHeadlines = doc.select(".jr_blogview .listItem");
