@@ -16,22 +16,22 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by miha on 19.01.2016.
- * Class parser megacritic site for select new Films
+ * Created by miha on 23.01.2016.
  */
-@Component("MegacriticParser")
-public class MegacriticParser extends ParserImpl{
-    private static Logger log= Logger.getLogger(MegacriticParser.class);
+@Component("SerialochkaParser")
+public class SerialochkaParser  extends ParserImpl{
+    private static Logger log= Logger.getLogger(SerialochkaParser.class);
 
-    public MegacriticParser(){
+
+    public SerialochkaParser(){
     }
 
-    private String urlSite="http://www.megacritic.ru/films.html";
+    private String urlSite="http://serialochka.ru/";
 
     public List<FilmTake> startParse() throws IOException {
 
         Document doc = Jsoup.connect(urlSite).get();
-        Elements newsHeadlines = doc.select(".jr_blogview .listItem");
+        Elements newsHeadlines = doc.select(".mainprasp tr.serin");
         List<FilmTake> listFilmTake=new ArrayList<FilmTake>();
         for(Element el:newsHeadlines){
             String name=el.select(".contentTitle").text();
