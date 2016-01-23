@@ -6,7 +6,7 @@
 
 
     <groupId>by.nulay.changer</groupId>
-    <artifactId>changer-starter</artifactId>
+    <artifactId>changer</artifactId>
     <description>Changer sight starter</description>
     <version>1</version>
     <packaging>jar</packaging>
@@ -36,11 +36,7 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>rw.ktc.cms</groupId>
-			<artifactId>node-hib</artifactId>
-            <version>${node.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -94,30 +90,14 @@
         </dependency>
 
         <dependency>
-            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
             <groupId>rw.ktc.cms</groupId>
             <artifactId>node</artifactId>
             <version>${node.version}</version>
         </dependency>
         <dependency>
             <groupId>rw.ktc.cms</groupId>
-            <artifactId>node</artifactId>
-            <version>0.1.6-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>rw.ktc.cms</groupId>
-            <artifactId>node</artifactId>
-            <version>0.1.6-SNAPSHOT</version>
+            <artifactId>node-hib</artifactId>
+            <version>${node.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
