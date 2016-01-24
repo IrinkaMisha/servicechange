@@ -16,11 +16,11 @@
     <!--<context:component-scan base-package="rw.ktc.cms.material"/>-->
 
     <!--<mvc:view-controller path="/admin/content/addpage.html" view-name="addPage"/>-->
-    <security:intercept-url pattern="/changer/**" access="permitAll" requires-channel="https" />
-    <!--<security:http pattern="/changer/**" auto-config="true" use-expressions="true">-->
-        <!--<security:intercept-url pattern="/**" access="permitAll" requires-channel="any" method="OPTIONS"/>-->
-    <!--</security:http>-->
-
+    <!--
+        <security:http pattern="/changer/**" auto-config="true" use-expressions="true">
+            <security:intercept-url pattern="/**" access="permitAll" requires-channel="any" method="OPTIONS"/>
+        </security:http>
+    -->
     <!--Список хибернет маппингов для модуля vkchange-->
     <bean id="listHibPackageServChange"  class="java.util.ArrayList">
         <constructor-arg>
