@@ -4,6 +4,7 @@ import by.nulay.changer.ChangerException;
 import by.nulay.changer.vk.FilmTake;
 import by.nulay.changer.vk.FilmTakeService;
 import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -24,7 +25,8 @@ public abstract class ParserImpl {
     public void startParseAndSave() throws ChangerException{
         try {
             saveFilm(startParse());
-        } catch (IOException e) {
+        } catch (Exception e) {
+            log.error("Not success parse and save Film",e);
             throw new ChangerException("Not success parse and save Film",e);
         }
     }

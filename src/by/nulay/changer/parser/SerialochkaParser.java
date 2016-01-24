@@ -1,19 +1,16 @@
 package by.nulay.changer.parser;
 
 import by.nulay.changer.vk.FilmTake;
-import by.nulay.changer.vk.FilmTakeService;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by miha on 23.01.2016.
@@ -33,20 +30,40 @@ public class SerialochkaParser  extends ParserImpl{
         Document doc = Jsoup.connect(urlSite).get();
         Elements newsHeadlines = doc.select(".mainprasp tr.serin");
         List<FilmTake> listFilmTake=new ArrayList<FilmTake>();
-        for(Element el:newsHeadlines){
-            String name=el.select(".contentTitle").text();
-            String img=el.select(".contentThumbnail img").attr("src");
-            String film=el.select(".jr_customFields").text();
-            String discription=el.select(".contentIntrotext").text();
-
+        Map<String,FilmTake> hrefs = new HashMap<String,FilmTake>();
+        for(Element el:newsHeadlines) {
             FilmTake filmTakeF = new FilmTake();
-            filmTakeF.setFilm(film);
-            filmTakeF.setName(name);
-            filmTakeF.setDiscription(discription);
+            filmTakeF.setName((el.select(".serinf").text()+" "+el.select(".rsdtv").text()).trim());
+            filmTakeF.setDiscription(doc.select(".mainprasp h3.tb").text());
+            filmTakeF.setDiscription(filmTakeF.getDiscription().substring(0,filmTakeF.getDiscription().length()-35));
+            hrefs.put(el.select(".serinf a").attr("href"),filmTakeF);
+        }
+        for(String els:hrefs.keySet()){
+            Document docS = Jsoup.connect(els).get();
+            Elements oneF = docS.select(".serialinfo");
+            String res=oneF.text();
+            res=res.replaceAll("Рейтинг Kinopoisk - Р","Р");
+            res=res.replaceAll("Рейтинг ImDb - М","М");
+            if(res.endsWith("Место в топе -"))
+                res=res.replaceAll("Место в топе -","");
+            Elements opisser = docS.select(".opisser");
+            String descr=opisser.text();
+            descr=descr.replaceAll("Наша рецензия","Рецензия");
+
+//            String name = docS.select(".filmfull h1[itemprop=name]").text()+" "+
+//                    docS.select(".filmfull .engname").text()+" "+
+//                    docS.select(".filmfull .atitle").text();
+            String img="http://serialochka.ru"+docS.select(".filmfullimg img").attr("src");
+
+            FilmTake filmTakeF=hrefs.get(els);
+            filmTakeF.setFilm(res);
+            //filmTakeF.setName(hrefs.get(els).trim());
+            filmTakeF.setDiscription(filmTakeF.getDiscription()+" "+descr);
             filmTakeF.setImg(img);
-            filmTakeF.setSight("http://www.megacritic.ru/");
+            filmTakeF.setSight("http://serialochka.ru/");
             filmTakeF.setDateCreate(new Date());
             listFilmTake.add(filmTakeF);
+
         }
         return listFilmTake;
     }
