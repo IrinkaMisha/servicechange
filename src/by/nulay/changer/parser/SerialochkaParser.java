@@ -39,7 +39,7 @@ public class SerialochkaParser  extends ParserImpl{
             hrefs.put(el.select(".serinf a").attr("href"),filmTakeF);
         }
         for(String els:hrefs.keySet()){
-            Document docS = Jsoup.connect(els).get();
+            Document docS = Jsoup.connect(urlSite+els).get();
             Elements oneF = docS.select(".serialinfo");
             String res=oneF.text();
             res=res.replaceAll("Рейтинг Kinopoisk - Р","Р");
