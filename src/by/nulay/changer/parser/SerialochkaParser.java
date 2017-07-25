@@ -53,7 +53,7 @@ public class SerialochkaParser  extends ParserImpl{
 //            String name = docS.select(".filmfull h1[itemprop=name]").text()+" "+
 //                    docS.select(".filmfull .engname").text()+" "+
 //                    docS.select(".filmfull .atitle").text();
-            String img="http://serialochka.ru"+docS.select(".filmfullimg img").attr("src");
+            String img="http://serialochka.ru"+docS.select(".series-poster img").attr("src");
 
             FilmTake filmTakeF=hrefs.get(els);
             filmTakeF.setFilm(res);

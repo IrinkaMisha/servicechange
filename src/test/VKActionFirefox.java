@@ -1,9 +1,6 @@
 package test;
 
-import by.nulay.changer.ChangerException;
-import by.nulay.changer.parser.MegacriticParser;
-import by.nulay.changer.parser.ParserImpl;
-import by.nulay.changer.parser.SerialochkaParser;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,9 +12,9 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
@@ -26,8 +23,11 @@ import java.util.concurrent.TimeUnit;
  * Created by miha on 16.10.2016.
  */
 public class VKActionFirefox implements VKAction {
-    private static Map<String, String> strCh = new HashMap<>();
+
+    private static Logger log = Logger.getLogger(VKActionFirefox.class);
+    public static Map<String, String> strCh = new HashMap<>();
     private static Map<String, FilterArticle> filterMap = new HashMap<>();
+    public static VKAction VKACTIONFIREFOX = new VKActionFirefox();
 
     {
         strCh.put("пизд", "п&зд");
@@ -38,8 +38,34 @@ public class VKActionFirefox implements VKAction {
         strCh.put("Ебат", "@бат");
         strCh.put("ебан", "@бан");
         strCh.put("Ебан", "@бан");
+        strCh.put("&nbsp;", "");
+
         strCh.put("anekdotov.net", "");
         strCh.put("анeкдотoв.net", "");
+        strCh.put("анекдотов.nеt", "");
+        strCh.put("aнекдотов.nеt", "");
+        strCh.put("aнекдoтов.net", "");
+        strCh.put("aнекдотoв.net", "");
+        strCh.put("aнекдoтов.nеt", "");
+        strCh.put("aнeкдoтов.nеt", "");
+        strCh.put("анeкдoтов.net", "");
+        strCh.put("aнeкдoтoв.nеt", "");
+        strCh.put("анeкдотов.nеt", "");
+        strCh.put("анeкдoтoв.net", "");
+        strCh.put("анeкдoтoв.nеt", "");
+        strCh.put("анeкдoтов.nеt", "");
+        strCh.put("aнeкдoтoв.net", "");
+        strCh.put("aнекдотoв.nеt", "");
+        strCh.put("анекдoтов.nеt", "");
+        strCh.put("анекдoтов.net", "");
+        strCh.put("анeкдотов.nеt", "");
+        strCh.put("анекдотoв.nеt", "");
+        strCh.put("анекдотoв.net", "");
+        strCh.put("aнeкдoтов.net", "");
+        strCh.put("aнекдoтoв.net", "");
+        strCh.put("aнeкдотoв.net", "");
+
+
         strCh.put("ебу", "@бу");
         strCh.put("Ебу", "@бу");
         strCh.put("еби", "@би");
@@ -51,7 +77,7 @@ public class VKActionFirefox implements VKAction {
 
     }
 
-    public static Queue<Article> queueForFilm = new SynchronousQueue();
+    public static SynchronousQueue<Article> queueForFilm = new SynchronousQueue();
 
 
     public static void main(String[] args) {
@@ -138,42 +164,55 @@ public class VKActionFirefox implements VKAction {
                     Date d1 = new Date();
                     if (d1.getHours() + 1 > 23 || d1.getHours() < 5) {
                         System.out.println("thAnek:sleep 6 hours");
-                        try {
-                            Thread.sleep(1000 * 60 * 60 * 6);
-                        } catch (InterruptedException e) {
-                        }
+                        sleepOn(1000 * 60 * 60 * 6);
                     }
-
-                    VKAction vkActionST = null;
-                    try {
-                        vkActionST = new VKActionFirefox(user.get(0));
-                    } catch (Exception e) {
-                    }
-                    if (vkActionST != null) {
+                    String anek = getAnekdotString();
+                    if (anek != null) {
+                        VKAction vkActionST = null;
                         try {
-                            vkActionST.loginToSight("https://vk.com", user.get(1), user.get(2));
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            vkActionST.addArticle("https://vk.com/notgravity", changeV(new LoaderArticle().getAnekdot().getArticle(), strCh));
+                            vkActionST = new VKActionFirefox(user.get(0));
                         } catch (Exception e) {
-                            System.out.println("thAnek:didn`t find anekdot");
-                        } finally {
-                            vkActionST.stopBrowser();
+                        }
+                        if (vkActionST != null) {
+                            try {
+                                vkActionST.loginToSight("https://vk.com", user.get(1), user.get(2));
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                vkActionST.addArticle("https://vk.com/notgravity", changeV(anek.replaceAll("[aа].{8}\\..{2}t", ""), strCh));
+                            } catch (Exception e) {
+                                System.out.println("thAnek:didn`t find anekdot");
+                            } finally {
+                                vkActionST.stopBrowser();
+                            }
                         }
                     }
                     System.out.println("thAnek:sleep 30 min");
-                    try {
-                        Thread.sleep(1000 * 60 * 30);
-                    } catch (InterruptedException e) {
-                    }
+                    sleepOn(1000 * 60 * 30);
                 }
             }
         });
 
         thAnek.start();
+    }
+
+    /**
+     * Method return anekdot
+     * @return
+     */
+    private static String getAnekdotString() {
+        String anek="";
+        try {
+            anek = new LoaderArticle().getAnekdot().getArticle();
+            if (anek.split(" ").length<4){
+                return getAnekdotString();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return anek;
     }
 
     private static void startPostFilm(final List<String> user) {
@@ -186,56 +225,47 @@ public class VKActionFirefox implements VKAction {
                     Date d1 = new Date();
                     if (d1.getHours() + 1 > 23 || d1.getHours() < 5) {
                         System.out.println("thFilm:sleep 6 hours");
-                        try {
-                            Thread.sleep(1000 * 60 * 60 * 6);
-                        } catch (InterruptedException e) {
-                        }
+                        sleepOn(1000 * 60 * 60 * 6);
                     }
-
-                    VKAction vkActionST = null;
-                    try {
-                        vkActionST = new VKActionFirefox(user.get(0));
-                    } catch (Exception e) {
-                    }
-                    if (vkActionST != null) {
-                        Article article = null;
+                    Article article = getArticle();
+                    if (article != null) {
+                        VKAction vkActionST = null;
                         try {
-                            vkActionST.loginToSight("https://vk.com", user.get(1), user.get(2));
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                            }
-                            boolean chP = true;
-                            while (chP) {
-                                if (queueForFilm.size() > 0) {
-                                    article = queueForFilm.peek();
-                                } else {
-                                    article = new LoaderArticle().getFilm();
-                                }
-                                if (article != null && article.getArticle() != null) {
-                                    vkActionST.addArticle("https://vk.com/smedia_club", article.getArticle(), article.getImages());
-                                    int t = new Random().nextInt(10);
-                                    System.out.println("thFilm:sleep " + t + " мин.");
-                                    try {
-                                        Thread.sleep(1000 * 60 * t);
-                                    } catch (InterruptedException e1) {
-                                    }
-                                } else {
-                                    chP = false;
-                                }
-                            }
+                            vkActionST = new VKActionFirefox(user.get(0));
                         } catch (Exception e) {
-                            // e.printStackTrace();
-                            queueForFilm.add(article);
-                        } finally {
-                            vkActionST.stopBrowser();
+                        }
+                        if (vkActionST != null) {
+                            try {
+                                vkActionST.loginToSight("https://vk.com", user.get(1), user.get(2));
+                                sleepOn(2000);
+                                boolean chP = true;
+                                int repeat = 0;
+                                while (chP & repeat < 18) {
+                                    repeat++;
+                                    if (article != null && article.getArticle() != null) {
+                                        vkActionST.addArticle("https://vk.com/smedia_club", article.getArticle(), article.getImages());
+                                        int t = new Random().nextInt(10);
+                                        System.out.println("thFilm:sleep " + t + " мин.");
+                                        sleepOn(1000 * 60 * t);
+                                    } else {
+                                        chP = false;
+                                    }
+                                    article = getArticle();
+                                }
+                            } catch (Exception e) {
+                                // e.printStackTrace();
+                                try {
+                                    queueForFilm.put(article);
+                                } catch (InterruptedException e1) {
+                                    e1.printStackTrace();
+                                }
+                            } finally {
+                                vkActionST.stopBrowser();
+                            }
                         }
                     }
                     System.out.println("thFilm:sleep 2 hours");
-                    try {
-                        Thread.sleep(1000 * 60 * 60 * 2);
-                    } catch (InterruptedException e) {
-                    }
+                    sleepOn(1000 * 60 * 60 * 2);
 
                 }
             }
@@ -244,16 +274,32 @@ public class VKActionFirefox implements VKAction {
         thFilm.start();
     }
 
+    private static Article getArticle() {
+        Article article = null;
+        if (queueForFilm.size() > 0) {
+            try {
+                article = queueForFilm.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // for(int i=0;i<1000;i++) {
+            try {
+                article = new LoaderArticle().getFilm();
+            } catch (IOException e) {
+            }
+            // }
+        }
+        return article;
+    }
+
     private static void startLiker(final List<String> user) {
         Thread thLike = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     System.out.println("thLike:start execution");
-                    try {
-                        Thread.sleep(1000 * 60 * new Random().nextInt(60));
-                    } catch (InterruptedException e) {
-                    }
+                    sleepOn(1000 * 60 * new Random().nextInt(60));
                     VKAction vkActionST = null;
                     try {
                         vkActionST = new VKActionFirefox(user.get(0));
@@ -262,27 +308,15 @@ public class VKActionFirefox implements VKAction {
                     if (vkActionST != null) {
                         try {
                             vkActionST.loginToSight("https://vk.com", user.get(1), user.get(2));
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                            }
+                            sleepOn(2000);
                             vkActionST.addFrands();
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                            }
-                            vkActionST.sayFrandsRandomRecord("https://vk.com/notgravity");
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                            }
+                            sleepOn(2000);
+                            vkActionST.sayFriendsRandomRecord("https://vk.com/notgravity");
+                            sleepOn(2000);
                             if (new Random().nextInt(3) == 2) {
-                                vkActionST.sayFrandsRandomRecord("https://vk.com/smedia_club");
+                                vkActionST.sayFriendsRandomRecord("https://vk.com/smedia_club");
                             }
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                            }
+                            sleepOn(2000);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -297,6 +331,9 @@ public class VKActionFirefox implements VKAction {
     }
 
     private WebDriver driver;
+
+    public VKActionFirefox() {
+    }
 
     public VKActionFirefox(String profileName) {
         ProfilesIni profile = new ProfilesIni();
@@ -314,7 +351,7 @@ public class VKActionFirefox implements VKAction {
 
     public List<Article> findRecords(String url) {
         driver.navigate().to(url);
-        waitLoadSelector(By.cssSelector("#global_prg"), 1);
+        waitLoadSelector(By.cssSelector("#global_prg"), 1,driver);
         List<WebElement> wel = null;
         List<Article> artticles = new ArrayList<>();
         try {
@@ -330,14 +367,7 @@ public class VKActionFirefox implements VKAction {
                             }
                             List<WebElement> imgs = we.findElements(By.cssSelector(".page_post_sized_thumbs a.page_post_thumb_wrap"));
                             if (imgs != null && imgs.size() > 0) {
-                                List<String> lI = new ArrayList<>();
-                                for (WebElement wed : imgs) {
-                                    String l = wed.getAttribute("style");
-                                    if (l != null && l.indexOf("url(") > -1 && l.lastIndexOf(")") > -1) {
-                                        l = l.substring(l.indexOf("url(") + 5, l.lastIndexOf(")") - 1);
-                                        lI.add(l);
-                                    }
-                                }
+                                List<String> lI = getAllURsImagesFromElement(imgs);
                                 article.setImages(lI.toArray(new String[lI.size()]));
                             }
                             artticles.add(article);
@@ -351,6 +381,27 @@ public class VKActionFirefox implements VKAction {
             e.printStackTrace();
         }
         return artticles;
+    }
+
+    private List<String> getAllURsImagesFromElement(List<WebElement> imgs) {
+        List<String> lI = new ArrayList<>();
+        if (imgs != null && imgs.size() > 0) {
+            for (WebElement wed : imgs) {
+                String l = wed.getAttribute("style");
+                if (isURLtoContent(l)) {
+                    lI.add(getURLfromStyleContent(l));
+                }
+            }
+        }
+        return lI;
+    }
+
+    private String getURLfromStyleContent(String l) {
+        return l.substring(l.indexOf("url(") + 5, l.lastIndexOf(")") - 1);
+    }
+
+    private boolean isURLtoContent(String l) {
+        return l != null && l.indexOf("url(") > -1 && l.lastIndexOf(")") > -1;
     }
 
     private boolean checkFilter(WebElement we, FilterArticle filter) {
@@ -399,16 +450,16 @@ public class VKActionFirefox implements VKAction {
         String bmonth = "1";
         String sex = "2";
         String country = "392";
-        String lastLoad = "";
+
         String url = "https://vk.com/friends?act=find&c%5Bage_from%5D=" + age + "&c%5Bage_to%5D=" + age + "&c%5Bbday%5D=" + bDay +
                 "&c%5Bbmonth%5D=" + bmonth + "&c%5Bcity%5D=" + country +
                 "&c%5Bcountry%5D=3&c%5Bname%5D=1&c%5Bphoto%5D=1&c%5Bsection%5D=people&c%5Bsex%5D=" + sex + "&c%5Bsort%5D=1";
 
         driver.navigate().to(url);
 
-        waitLoadSelector(By.cssSelector("#l_fr"), 2);
+        waitLoadSelector(By.cssSelector("#l_fr"), 2,driver);
         WebElement we = null;
-        waitLoadSelector(By.cssSelector("#l_fr span.inl_bl.left_count"), 1);
+        waitLoadSelector(By.cssSelector("#l_fr span.inl_bl.left_count"), 1,driver);
         try {
             we = driver.findElement(By.cssSelector("#l_fr span.inl_bl.left_count"));
         } catch (Exception e) {
@@ -419,13 +470,14 @@ public class VKActionFirefox implements VKAction {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            waitLoadSelector(By.cssSelector("div.friends_user_row"), 2);
+            waitLoadSelector(By.cssSelector("div.friends_user_row"), 2,driver);
             List<WebElement> listWe = driver.findElements(By.cssSelector("div.friends_user_row"));
             for (WebElement wefr : listWe) {
                 try {
                     wefr.findElements(By.cssSelector("button.flat_button")).get(0).click();
-                    System.out.println("add frand");
+                    System.out.println("add friend");
                 } catch (Exception e) {
+                    System.out.println("friend wasn't added");
                 }
             }
         }
@@ -467,10 +519,7 @@ public class VKActionFirefox implements VKAction {
     }
 
     public void waitForLoad(WebDriver driver, int sekwait) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e1) {
-        }
+        sleepOn(1000);
         ExpectedCondition<Boolean> pageLoadCondition = new
                 ExpectedCondition<Boolean>() {
                     public Boolean apply(WebDriver driver) {
@@ -481,7 +530,7 @@ public class VKActionFirefox implements VKAction {
         wait.until(pageLoadCondition);
     }
 
-    public void waitLoadSelector(final By selector, int delay) {
+    public static void waitLoadSelector(final By selector, int delay, WebDriver driver) {
         try {
             (new WebDriverWait(driver, delay)).until(new ExpectedCondition<Boolean>() {
                 public Boolean apply(WebDriver d) {
@@ -495,68 +544,43 @@ public class VKActionFirefox implements VKAction {
             });
         } catch (Exception e) {
             System.out.println("govnoto");
-//            try {
-//                Thread.sleep(delay * 1000);
-//            } catch (InterruptedException e1) {
-//            }
-//            waitLoadSelector(selector, delay);
         }
     }
 
-    public void sayFrandsRandomRecord(String groupURL) {
+    public void sayFriendsRandomRecord(String groupURL) {
 
         driver.navigate().to(groupURL);
-        waitLoadSelector(By.cssSelector("i.post_share_icon"), 2);
+        waitLoadSelector(By.cssSelector("i.post_share_icon"), 2,driver);
         // Find the text input element by its name
 //        List<WebElement> elementsShareBut0 = driver.findElements(By.className("post_share"));
 
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollBy(0,550)", "");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e1) {
-        }
-        jse.executeScript("window.scrollBy(0,550)", "");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e1) {
-        }
-        List<WebElement> elementsShareBut = driver.findElements(By.cssSelector("i.post_share_icon"));
+        scrollAndSleep();
+        scrollAndSleep();
 
+        //driver.findElements(By.cssSelector("i.post_share_icon"));
+        List<WebElement> pressedShareBtns = getAllPressedShareButton();
 
-        List<WebElement> elementsShareBut2 = new ArrayList<>();
-        for (WebElement el : elementsShareBut) {
-            if (el.getCssValue("opacity") != "1") {
-                elementsShareBut2.add(el.findElement(By.xpath("..")));
-            }
-        }
-        if (elementsShareBut2.size() > 0) {
-            System.out.println("Element size: " + elementsShareBut2.size());
+        if (pressedShareBtns.size() > 0) {
+            log.debug("Element size: " + pressedShareBtns.size());
             boolean d = false;
             int ind = 0;
             while (!d) {
                 try {
-                    elementsShareBut2.get(new Random().nextInt(elementsShareBut2.size())).click();
+                    clickRandomButton(pressedShareBtns);
                     d = true;
                 } catch (Exception e) {
                     ind++;
                     if (ind > 10) {
                         d = true;
                     }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e1) {
-                    }
+                    sleepOn(1000);
                     System.out.println("Page error: " + ind);
                 }
             }
             // Wait for the page to load, timeout after 10 seconds
-            waitLoadSelector(By.cssSelector("#like_share_send:visible"), 2);
+            waitLoadSelector(By.cssSelector("#like_share_send:visible"), 2,driver);
 
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e1) {
-            }
+            sleepOn(2000);
             List<WebElement> elementButShare = driver.findElements(By.cssSelector("#like_share_send"));
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             if (elementButShare != null && elementButShare.size() > 0) {
@@ -573,6 +597,41 @@ public class VKActionFirefox implements VKAction {
         }
     }
 
+    public static void sleepOn(int millisecSleep) {
+        try {
+            Thread.sleep(millisecSleep);
+        } catch (InterruptedException e1) {
+        }
+    }
+
+    private void clickRandomButton(List<WebElement> pressedShareBtns) {
+        pressedShareBtns.get(new Random().nextInt(pressedShareBtns.size())).click();
+    }
+
+    private List<WebElement> getAllSharedBtns() {
+        return driver.findElements(By.cssSelector("a.post_share._share_wrap:not(.my_share) i.post_share_icon"));
+    }
+
+    private List<WebElement> getAllPressedShareButton() {
+        List<WebElement> elementsShareBut2 = new ArrayList<>();
+        for (WebElement el : getAllSharedBtns()) {
+            if (isBtnPressed(el)) {
+                elementsShareBut2.add(el.findElement(By.xpath("..")));
+            }
+        }
+        return elementsShareBut2;
+    }
+
+    private void scrollAndSleep() {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("window.scrollBy(0,550)", "");
+        sleepOn(2000);
+    }
+
+    private boolean isBtnPressed(WebElement el) {
+        return el.getCssValue("opacity") != "1";
+    }
+
     public void stopBrowser() {
         driver.quit();
     }
@@ -583,7 +642,7 @@ public class VKActionFirefox implements VKAction {
 
     public void addArticle(String groupURL, String article, String[] images) {
         driver.navigate().to(groupURL);
-        waitLoadSelector(By.id("post_field"), 2);
+        waitLoadSelector(By.id("post_field"), 2,driver);
         WebElement elementArt = null;
         int ind = 0;
         boolean d = false;
@@ -597,10 +656,7 @@ public class VKActionFirefox implements VKAction {
                     System.out.println("addArticle жопа");
                     return;
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e1) {
-                }
+                sleepOn(1000);
                 ind++;
                 System.out.println("Attempt #" + ind);
             }
@@ -608,41 +664,23 @@ public class VKActionFirefox implements VKAction {
         if (images != null) {
             for (String image : images) {
                 elementArt.sendKeys(image);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e1) {
-                }
+                sleepOn(1000);
                 elementArt.sendKeys(" ");
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e1) {
-                }
+                sleepOn(5000);
                 elementArt.clear();
             }
         }
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e1) {
-        }
+        sleepOn(500);
         elementArt.sendKeys(article);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e1) {
-        }
+        sleepOn(1000);
 //        ind = 0;
 //        d = false;
 //        WebElement butEl = driver.findElement(By.cssSelector("button.flat_button.addpost_button"));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e1) {
-        }
+        sleepOn(1000);
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript(" wall.sendPost()", "");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e1) {
-        }
+        sleepOn(2000);
         System.out.println("addArticleS");
     }
 

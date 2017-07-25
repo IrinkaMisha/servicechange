@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,25 +27,35 @@ public class MegacriticParser extends ParserImpl{
     public MegacriticParser(){
     }
 
-    private String urlSite="http://www.megacritic.ru/films.html";
+    private String urlSite="https://www.kinopoisk.ru";
 
     public List<FilmTake> startParse() throws IOException {
 
-        Document doc = Jsoup.connect(urlSite).timeout(10*1000).get();
-        Elements newsHeadlines = doc.select(".jr_blogview .listItem");
+        Document doc = null;
+//        System.setProperty("javax.net.ssl.keyStore", "megacriticru.crt");
+//        System.setProperty("javax.net.ssl.trustStoreType","megacriticru.crt");
+//        System.setProperty("javax.net.ssl.keyStore", "C:\\\\files\\work\\openshift\\task2\\src\\main\\webapp\\resources\\sertificat\\megacriticru.crt");
+//        System.setProperty("javax.net.ssl.keyPassword","qwerty");
+        try {
+            doc = Jsoup.connect(urlSite+"/premiere/ru/date/"+ new SimpleDateFormat("YYYY-MM-dd").format(new Date(new Date().getTime()+60000*60*24))+"/").timeout(10*1000).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Elements newsHeadlines = doc.select(".premier_item");
         List<FilmTake> listFilmTake=new ArrayList<FilmTake>();
         for(Element el:newsHeadlines){
-            String name=el.select(".contentTitle").text();
-            String img=el.select(".contentThumbnail img").attr("src");
-            String film=el.select(".jr_customFields").text();
-            String discription=el.select(".contentIntrotext").text();
+            String name=el.select(".text").text() + el.select(".ajax_rating").text();
+            doc = Jsoup.connect(urlSite+el.select(".text a").get(0).attr("href")).timeout(10*1000).get();
+            String img= doc.select(".popupBigImage img").attr("src");
+            String film=doc.select(".moviename-big").text();
+            String discription=doc.select("div.film-synopsys").text();
 
             FilmTake filmTakeF = new FilmTake();
             filmTakeF.setFilm(film);
             filmTakeF.setName(name);
             filmTakeF.setDiscription(discription);
             filmTakeF.setImg(img);
-            filmTakeF.setSight("http://www.megacritic.ru/");
+            filmTakeF.setSight("https://www.kinopoisk.ru");
             filmTakeF.setDateCreate(new Date());
             listFilmTake.add(filmTakeF);
         }

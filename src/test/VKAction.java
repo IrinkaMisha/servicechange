@@ -8,7 +8,7 @@ public interface VKAction {
      * Say frands about random record
      * @param groupURL group URL
      */
-    void sayFrandsRandomRecord(String groupURL);
+    void sayFriendsRandomRecord(String groupURL);
 
     /**
      * Login sight
