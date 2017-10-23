@@ -3,7 +3,7 @@ package by.nulay.changer.vk;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
-import rw.ktc.cms.nodedata.service.hib.GenericHibernateDAO;
+import by.imix.cms.nodedata.service.hib.GenericHibernateDAO;
 
 import java.util.Date;
 import java.util.List;

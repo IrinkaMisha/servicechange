@@ -2,12 +2,8 @@ package by.nulay.changer.task;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rw.ktc.cms.nodedata.service.hib.GenericHibernateDAO;
-import rw.ktc.cms.nodedata.service.hib.ServiceHib;
+import by.imix.cms.nodedata.service.hib.GenericHibernateDAO;
 
 import java.util.Date;
 import java.util.List;
