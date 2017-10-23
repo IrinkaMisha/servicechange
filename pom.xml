@@ -8,12 +8,12 @@
     <groupId>by.nulay.changer</groupId>
     <artifactId>changer</artifactId>
     <description>Changer sight starter</description>
-    <version>1</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>3.2.3.RELEASE</spring.version>
+        <spring.version>4.2.0.RELEASE</spring.version>
         <spring.security.version>3.2.3.RELEASE</spring.security.version>
         <hibernate.version>4.2.15.Final</hibernate.version>
         <mysql-connector.version>5.1.31</mysql-connector.version>
