@@ -21,7 +21,7 @@
         <!--<tiles.version>3.0.4</tiles.version>-->
         <java.version>1.7</java.version>
         <jackson.version>2.4.1</jackson.version>
-        <node.version>0.1.6-SNAPSHOT</node.version>
+        <node.version>1.0.0</node.version>
     </properties>
 
     <dependencies>
