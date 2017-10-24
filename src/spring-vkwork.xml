@@ -12,8 +12,8 @@
     <context:component-scan base-package="by.nulay.changer.films"/>
     <context:component-scan base-package="by.nulay.changer.task"/>
     <context:component-scan base-package="by.nulay.changer.data"/>
-    <!--<context:component-scan base-package="rw.ktc.cms.menu"/>-->
-    <!--<context:component-scan base-package="rw.ktc.cms.material"/>-->
+    <!--<context:component-scan base-package="by.imix.cms.menu"/>-->
+    <!--<context:component-scan base-package="by.imix.cms.material"/>-->
 
     <!--<mvc:view-controller path="/admin/content/addpage.html" view-name="addPage"/>-->
     <security:intercept-url pattern="/changer/**" access="permitAll" requires-channel="https" />

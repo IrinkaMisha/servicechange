@@ -13,8 +13,8 @@
     <context:component-scan base-package="by.nulay.changer.task"> <context:exclude-filter type="regex" expression=".*Controller.*"/></context:component-scan>
     <context:component-scan base-package="by.nulay.changer.data"> <context:exclude-filter type="regex" expression=".*Controller.*"/></context:component-scan>
     <context:component-scan base-package="by.nulay.changer.parser"> <context:exclude-filter type="regex" expression=".*Controller.*"/></context:component-scan>
-    <!--<context:component-scan base-package="rw.ktc.cms.menu" resource-pattern="[^Cotroller]"/>-->
-    <!--<context:component-scan base-package="rw.ktc.cms.material"/>-->
+    <!--<context:component-scan base-package="by.imix.cms.menu" resource-pattern="[^Cotroller]"/>-->
+    <!--<context:component-scan base-package="by.imix.cms.material"/>-->
 
     <!--<bean class="by.nulay.changer.parser.MegacriticParser"></bean>-->
 

@@ -90,12 +90,12 @@
         </dependency>
 
         <dependency>
-            <groupId>rw.ktc.cms</groupId>
+            <groupId>by.imix.cms</groupId>
             <artifactId>node</artifactId>
             <version>${node.version}</version>
         </dependency>
         <dependency>
-            <groupId>rw.ktc.cms</groupId>
+            <groupId>by.imix.cms</groupId>
             <artifactId>node-hib</artifactId>
             <version>${node.version}</version>
         </dependency>
@@ -164,7 +164,7 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addClasspath>true</addClasspath>
-                            <!--<mainClass>rw.ktc.nsi.app.StartInConsole</mainClass>-->
+                            <!--<mainClass>by.imix.nsi.app.StartInConsole</mainClass>-->
                             <classpathPrefix>dependency-jars/</classpathPrefix>
                         </manifest>
                         <!--<manifestEntries>-->
