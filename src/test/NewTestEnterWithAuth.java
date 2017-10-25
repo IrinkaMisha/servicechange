@@ -19,7 +19,7 @@ import org.apache.http.util.EntityUtils;
  */
 public class NewTestEnterWithAuth {
     public static void main(final String[] args) throws Exception {
-        final HttpHost targetHost = new HttpHost("localhost", 8080, "http");
+        final HttpHost targetHost = new HttpHost("mysql", 8080, "http");
 
         final DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
@@ -40,7 +40,7 @@ public class NewTestEnterWithAuth {
             final BasicHttpContext localcontext = new BasicHttpContext();
             localcontext.setAttribute(ClientContext.AUTH_CACHE, authCache);
 
-            final HttpGet httpget = new HttpGet("http://localhost:8080/spring-security-rest-digest-auth/api/foos/1");
+            final HttpGet httpget = new HttpGet("http://mysql:8080/spring-security-rest-digest-auth/api/foos/1");
 
             System.out.println("executing request: " + httpget.getRequestLine());
             System.out.println("to target: " + targetHost);
