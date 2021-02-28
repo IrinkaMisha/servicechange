@@ -83,15 +83,18 @@ public class VKActionFirefox implements VKAction {
     public static void main(String[] args) {
 
         List<String> user1 = new ArrayList<>();
+//        Account irNaid = new Account("irNaid", "+375299780180", "vkurody3");
         user1.add("irNaid");
         user1.add("+375299780180");
         user1.add("vkurody3");
 
+//        Account irNaid2 = new Account("irNaid2", "neznashk@mail.ru", "vkurody3");
         List<String> user2 = new ArrayList<>();
         user2.add("irNaid2");
         user2.add("neznashk@mail.ru");
         user2.add("vkurody3");
 
+//        Account miha = new Account("Miha", "+375297350741", "vkurody3");
         List<String> user3 = new ArrayList<>();
         user3.add("Miha");
         user3.add("+375297350741");

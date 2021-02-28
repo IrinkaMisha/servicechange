@@ -1,4 +1,4 @@
-package by.nulay.taskexecutor;
+package by.nulay.changer.taskexecutor;
 
 /**
  * Created by miha on 14.05.2017.

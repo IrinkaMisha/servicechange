@@ -1,4 +1,4 @@
-package by.nulay.changer.by.nulay.sightbot;
+package by.nulay.changer.taskexecutor.sightbot;
 
 /**
  * Created by miha on 26.11.2016.

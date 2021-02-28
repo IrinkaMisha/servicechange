@@ -7,6 +7,7 @@ public class Article {
     private String article;
     private String[] images;
     public Article(){}
+
     public Article(String article, String[] images) {
         this.article = article;
         this.images = images;

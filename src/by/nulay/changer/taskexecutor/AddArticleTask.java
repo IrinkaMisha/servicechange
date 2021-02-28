@@ -1,4 +1,4 @@
-package by.nulay.taskexecutor;
+package by.nulay.changer.taskexecutor;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,7 +13,7 @@ import test.VKActionFirefox;
  *
  * Class for create task add article and store data for it
  */
-public class AddArticleTask extends TaskMain implements Task, TaskExecutor {
+public class AddArticleTask extends TaskMain implements Task{
 
     private static Logger log = Logger.getLogger(VKActionFirefox.class);
 
@@ -28,7 +28,7 @@ public class AddArticleTask extends TaskMain implements Task, TaskExecutor {
      * @OverrideDoc
      */
     @Override
-    public void execute(Task task) {
+    public void execute() {
         moveTo(url);
         addArticle(article);
     }
@@ -84,4 +84,6 @@ public class AddArticleTask extends TaskMain implements Task, TaskExecutor {
         sleepOn(5000);
         elementArt.clear();
     }
+
+
 }

@@ -1,4 +1,4 @@
-package by.nulay.changer.by.nulay.sightbot;
+package by.nulay.changer.taskexecutor.sightbot;
 
 import java.util.Date;
 

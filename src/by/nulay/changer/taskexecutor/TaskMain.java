@@ -1,4 +1,4 @@
-package by.nulay.taskexecutor;
+package by.nulay.changer.taskexecutor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
